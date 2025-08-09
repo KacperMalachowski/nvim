@@ -1,13 +1,14 @@
 return {
-	{
-		"ThePrimeagen/harpoon",
-		branch = "harpoon2",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		config = function()
-			local harpoon = require("harpoon")
-			harpoon:setup()
+    {
+        "ThePrimeagen/harpoon",
+        branch = "harpoon2",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        config = function()
+            local harpoon = require("harpoon")
 
-			vim.keymap.set("n", "<leader>A", function()
+            harpoon:setup()
+
+            vim.keymap.set("n", "<leader>A", function()
 				harpoon:list():prepend()
 			end)
 			vim.keymap.set("n", "<leader>a", function()
@@ -41,7 +42,7 @@ return {
 			vim.keymap.set("n", "<leader><C-s>", function()
 				harpoon:list():replace_at(4)
 			end)
-		end,
-	}
+        end,
+    }
 }
-			
+
