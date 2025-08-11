@@ -8,6 +8,9 @@ return {
                 go = { "gofmt" },
                 javascript = { "prettier" },
                 typescript = { "prettier" },
+                python = { "black" },
+                json = { "prettier" },
+                yaml = { "prettier" },
             },
         })
     end
