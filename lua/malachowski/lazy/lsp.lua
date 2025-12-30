@@ -48,6 +48,8 @@ return {
 				"tailwindcss",
 				"yamlls",
 				"jsonls",
+                "terraformls",
+                "tflint",
 			},
 			handlers = {
 				function(server_name)
@@ -121,6 +123,25 @@ return {
 						},
 					})
 				end,
+
+                ["terraformls"] = function ()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.terraformls.setup({
+                        capabilities = capabilities,
+                        filetypes = { "terraform", "terraform-vars" },
+                        root_dir = lspconfig.util.root_pattern(".terraform", "*.tf"),
+                        settings = {
+                            terraform = {
+                                indexing = {
+                                    ignoreDirectoryNames = { ".terraform" },
+                                },
+                                validation = {
+                                    enableEnhancedValidation = true,
+                                },
+                            },
+                        },
+                    })
+                end,
 			},
 		})
 

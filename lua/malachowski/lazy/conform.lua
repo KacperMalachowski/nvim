@@ -11,6 +11,7 @@ return {
                 python = { "black" },
                 json = { "prettier" },
                 yaml = { "prettier" },
+                terraform = { "terraform_fmt" },
             },
         })
     end
