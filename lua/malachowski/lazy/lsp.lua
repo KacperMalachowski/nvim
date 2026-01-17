@@ -50,6 +50,7 @@ return {
 				"jsonls",
                 "terraformls",
                 "tflint",
+                "gh_actions_ls",
 			},
 			handlers = {
 				function(server_name)
