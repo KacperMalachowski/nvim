@@ -130,11 +130,17 @@ return {
                     lspconfig.terraformls.setup({
                         capabilities = capabilities,
                         filetypes = { "terraform", "terraform-vars" },
-                        root_dir = lspconfig.util.root_pattern(".terraform", "*.tf"),
+                        root_dir = lspconfig.util.root_pattern(".terraform", ".opentofu", "*.tf"),
+                        init_options = {
+                            terraformExecPath = "/usr/bin/tofu",
+                            experimentalFeatures = {
+                                prefillRequiredFields = true,
+                            },
+                        },
                         settings = {
                             terraform = {
                                 indexing = {
-                                    ignoreDirectoryNames = { ".terraform" },
+                                    ignoreDirectoryNames = { ".terraform", ".opentofu" },
                                 },
                                 validation = {
                                     enableEnhancedValidation = true,
