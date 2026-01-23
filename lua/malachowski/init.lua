@@ -16,7 +16,7 @@ vim.filetype.add({
     extension = {
         templ = "templ",
         tf = "terraform",
-        tfvars = "terraform",
+        tfvars = "terraform-vars",
     }
 })
 

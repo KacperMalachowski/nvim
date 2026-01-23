@@ -54,6 +54,10 @@ return {
 			},
 			handlers = {
 				function(server_name)
+					-- Skip terraformls here, it has its own handler
+					if server_name == "terraformls" then
+						return
+					end
 					print("Setting up LSP server: " .. server_name)
 					require("lspconfig")[server_name].setup({
 						capabilities = capabilities,
@@ -130,18 +134,17 @@ return {
                     lspconfig.terraformls.setup({
                         capabilities = capabilities,
                         filetypes = { "terraform", "terraform-vars" },
-                        root_dir = lspconfig.util.root_pattern(".terraform", ".opentofu", "*.tf"),
+                        root_dir = lspconfig.util.root_pattern(".terraform", ".git", ".opentofu"),
                         init_options = {
-                            terraformExecPath = "/usr/bin/tofu",
+                            terraform = {
+                                path = "/usr/bin/tofu",
+                            },
                             experimentalFeatures = {
                                 prefillRequiredFields = true,
                             },
                         },
                         settings = {
                             terraform = {
-                                indexing = {
-                                    ignoreDirectoryNames = { ".terraform", ".opentofu" },
-                                },
                                 validation = {
                                     enableEnhancedValidation = true,
                                 },
