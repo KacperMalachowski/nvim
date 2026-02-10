@@ -27,7 +27,15 @@ return {
 
 	config = function()
 		require("conform").setup({
-			formatters_by_ft = {},
+			formatters_by_ft = {
+                html = { "prettier" },
+                css = { "styleint" },
+                lua = { "stylua" },
+                terraform = { "terraform_fmt" },
+                tf = { "tofu_fmt" },
+                python = { "black" },
+                ansible = { "ansible-lint" }
+            },
 		})
 		local cmp = require("cmp")
 		local cmp_lsp = require("cmp_nvim_lsp")
@@ -158,10 +166,20 @@ return {
 		local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
 		cmp.setup({
+			enabled = true,
 			snippet = {
 				expand = function(args)
 					require("luasnip").lsp_expand(args.body)
 				end,
+			},
+			completion = {
+				autocomplete = {
+					require('cmp.types').cmp.TriggerEvent.InsertEnter,
+					require('cmp.types').cmp.TriggerEvent.TextChanged,
+				},
+			},
+			experimental = {
+				ghost_text = false,
 			},
 			mapping = cmp.mapping.preset.insert({
 				["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
@@ -170,7 +188,6 @@ return {
 				["<C-Space>"] = cmp.mapping.complete(),
 			}),
 			sources = cmp.config.sources({
-				{ name = "copilot", group_index = 2 },
 				{ name = "nvim_lsp" },
 				{ name = "luasnip" },
 			}, {
