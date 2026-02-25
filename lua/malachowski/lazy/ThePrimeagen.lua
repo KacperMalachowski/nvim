@@ -50,7 +50,7 @@ return {
             local _99 = require("99")
             _99.setup({
                 provider = _99.OpenCodeProvider,
-                model = "github-copilot/claude-sonnet-4.5",
+                model = "github-copilot/gpt-4.1",
                 md_files = {
                     "AGENTS.md",
                     "CLAUDE.md"
