@@ -59,6 +59,7 @@ return {
                 "terraformls",
                 "tflint",
                 "gh_actions_ls",
+                "pylsp",
 			},
 			handlers = {
 				function(server_name)
