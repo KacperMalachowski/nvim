@@ -48,9 +48,38 @@ return {
         "ThePrimeagen/99",
         config = function()
             local _99 = require("99")
+            local Providers = require("99.providers")
+
+            -- Custom provider that uses 99-build agent (with question denied)
+            local Custom99Provider = setmetatable({}, { __index = Providers.BaseProvider })
+
+            function Custom99Provider._build_command(_, query, context)
+                return {
+                    "opencode",
+                    "run",
+                    "--agent",
+                    "99-build",
+                    "-m",
+                    context.model,
+                    query,
+                }
+            end
+
+            function Custom99Provider._get_provider_name()
+                return "Custom99Provider"
+            end
+
+            function Custom99Provider._get_default_model()
+                return "opencode/claude-sonnet-4-5"
+            end
+
+            function Custom99Provider.fetch_models(callback)
+                Providers.OpenCodeProvider.fetch_models(callback)
+            end
+
             _99.setup({
-                provider = _99.OpenCodeProvider,
-                model = "github-copilot/gpt-4o",
+                provider = Custom99Provider,
+                model = "github-copilot/claude-sonnet-4.6",
                 md_files = {
                     "AGENTS.md",
                     "CLAUDE.md"
@@ -67,6 +96,17 @@ return {
                     source = "cmp"
                 },
             })
+
+            -- Workaround: Override read_tmp prompt to allow reading temp file
+            local prompt_settings = require("99.prompt-settings")
+            prompt_settings.prompts.read_tmp = function()
+                return [[
+TEMP_FILE is purely for output.
+If your tool requires reading before writing, read TEMP_FILE first (it may be empty), then write your results.
+After writing TEMP_FILE once, DO NOT perform any other actions. DO NOT read the file again. DO NOT communicate with the user. Immediately end the session.
+]]
+            end
+
             vim.keymap.set("n", "<leader>9v", function ()
                 _99.vibe()
             end)
