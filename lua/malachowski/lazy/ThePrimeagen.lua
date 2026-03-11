@@ -67,11 +67,17 @@ return {
                     source = "cmp"
                 },
             })
+            vim.keymap.set("n", "<leader>9v", function ()
+                _99.vibe()
+            end)
             vim.keymap.set("v", "<leader>9v", function ()
                 _99.visual()
             end)
             vim.keymap.set("n", "<leader>9s", function ()
                 _99.search()
+            end)
+            vim.keymap.set("n", "<leader>9o", function ()
+                _99.open()
             end)
             vim.keymap.set("n", "<leader>9x", function ()
                 _99.stop_all_requests()
