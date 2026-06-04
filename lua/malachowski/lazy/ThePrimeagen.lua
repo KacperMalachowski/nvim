@@ -50,46 +50,17 @@ return {
             local _99 = require("99")
             local Providers = require("99.providers")
 
-            -- Custom provider that uses 99-build agent (with question denied)
-            local Custom99Provider = setmetatable({}, { __index = Providers.BaseProvider })
-
-            function Custom99Provider._build_command(_, query, context)
-                return {
-                    "opencode",
-                    "run",
-                    "--agent",
-                    "99-build",
-                    "-m",
-                    context.model,
-                    query,
-                }
-            end
-
-            function Custom99Provider._get_provider_name()
-                return "Custom99Provider"
-            end
-
-            function Custom99Provider._get_default_model()
-                return "opencode/claude-sonnet-4-5"
-            end
-
-            function Custom99Provider.fetch_models(callback)
-                Providers.OpenCodeProvider.fetch_models(callback)
-            end
-
             _99.setup({
-                provider = Custom99Provider,
-                model = "github-copilot/claude-sonnet-4.6",
+                provider = Providers.ClaudeCodeProvider,
+                model = "claude-sonnet-4-6",
                 md_files = {
                     "AGENTS.md",
                     "CLAUDE.md"
                 },
                 completion = {
                     custom_rules = {
-                        "~/.config/opencode/skills",
                         "~/.claude/skills",
                         "~/.agents/skills",
-                        ".opencode/skills",
                         ".claude/skills",
                         ".agents/skills"
                     },
