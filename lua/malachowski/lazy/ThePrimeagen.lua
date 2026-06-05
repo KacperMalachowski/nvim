@@ -68,16 +68,6 @@ return {
                 },
             })
 
-            -- Workaround: Override read_tmp prompt to allow reading temp file
-            local prompt_settings = require("99.prompt-settings")
-            prompt_settings.prompts.read_tmp = function()
-                return [[
-TEMP_FILE is purely for output.
-If your tool requires reading before writing, read TEMP_FILE first (it may be empty), then write your results.
-After writing TEMP_FILE once, DO NOT perform any other actions. DO NOT read the file again. DO NOT communicate with the user. Immediately end the session.
-]]
-            end
-
             vim.keymap.set("n", "<leader>9v", function ()
                 _99.vibe()
             end)
