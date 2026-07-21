@@ -1,7 +1,10 @@
 return {
-    "mbbill/undotree",
+    "theprimeagen/vim-be-good",
 
-    config = function() 
-        vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+    dependencies = {
+        "nvim-lua/plenary.nvim"
+    },
+
+    config = function()
     end
 }
