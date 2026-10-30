@@ -48,19 +48,14 @@ return {
         "ThePrimeagen/99",
         config = function()
             local _99 = require("99")
-            local config_home = vim.env.XDG_CONFIG_HOME or (vim.fn.expand("~") .. "/.config")
 
+            -- No md_files: Claude Code already loads CLAUDE.md/AGENTS.md itself.
             _99.setup({
-                provider = require("malachowski.opencode_provider"),
-                md_files = {
-                    "AGENTS.md",
-                },
+                provider = require("malachowski.claude_provider"),
                 completion = {
                     custom_rules = {
-                        config_home .. "/opencode/skills",
-                        "~/.agents/skills",
-                        ".opencode/skills",
-                        ".agents/skills"
+                        "~/.claude/skills",
+                        ".claude/skills",
                     },
                     source = "cmp"
                 },
@@ -95,7 +90,7 @@ return {
             end)
             vim.keymap.set("n", "<leader>9m", function ()
                 require("99.extensions.telescope").select_model()
-            end, { desc = "OpenCode: select model" })
+            end, { desc = "99: select model" })
         end
     }
 }
